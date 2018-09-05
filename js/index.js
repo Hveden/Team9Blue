@@ -31,7 +31,7 @@ var blue ={
 
 var ConnDeviceId;
 var deviceList =[];
- 
+
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
     bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
@@ -41,7 +41,7 @@ function onDeviceReady(){
 	refreshDeviceList();
 }
 
-	 
+
 function refreshDeviceList(){
 	//deviceList =[];
 	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
@@ -57,11 +57,10 @@ function refreshDeviceList(){
 function onDiscoverDevice(device){
 	//Make a list in html and show devises
 		var listItem = document.createElement('li'),
-		if(device.name == "Nevad"){		
 		html = device.name+ "," + device.id;
 		listItem.innerHTML = html;
 		document.getElementById("bleDeviceList").appendChild(listItem);
-		}
+		
 }
 
 
@@ -73,7 +72,7 @@ function conn(){
 	document.getElementById("debugDiv").innerHTML += "<br>"+deviceTouchArr[0]+"<br>"+deviceTouchArr[1]; //for debug:
 	ble.connect(ConnDeviceId, onConnect, onConnError);
  }
- 
+
  //succes
 function onConnect(){
 	document.getElementById("statusDiv").innerHTML = " Status: Connected";
@@ -93,13 +92,13 @@ function onConnError(){
 
 function data(txt){
 	messageInput.value = txt;
-}	
+}
 
 function sendData() { // send data to Arduino
 	 var data = stringToBytes(messageInput.value);
 	ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
 }
-	
+
 function onSend(){
 	document.getElementById("sendDiv").innerHTML = "Sent: " + messageInput.value + "<br/>";
 }
@@ -114,5 +113,3 @@ function onDisconnect(){
 function onError(reason)  {
 	alert("ERROR: " + reason); // real apps should use notification.alert
 }
-
-	
