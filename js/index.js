@@ -60,7 +60,7 @@ function onDiscoverDevice(device){
 		html = device.name+ "," + device.id;
 		listItem.innerHTML = html;
 		document.getElementById("bleDeviceList").appendChild(listItem);
-		
+
 }
 
 
@@ -112,4 +112,9 @@ function onDisconnect(){
 }
 function onError(reason)  {
 	alert("ERROR: " + reason); // real apps should use notification.alert
+}
+
+function data(input){
+  var data = stringToBytes(input);
+ ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
 }

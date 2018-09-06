@@ -4,18 +4,18 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		
-		<meta name="viewport" content="width=device-width, initial-scale=1">	
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel = "stylesheet" type = "text/css" href = "format.css">   <!-- Link to style sheet named format.css -->
-		<script type="text/javascript" src="cordova.js"></script> 
+		<script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <title>Beacon</title>
     </head>
      <body onload="onLoad()">
 
 		<h1>Bluifruit test</h1>
-           
-		<ul id="bleDeviceList"> </ul>  
+
+		<ul id="bleDeviceList"> </ul>
 		<button id="refreshButton" onClick = "refreshDeviceList()">Refresh</button>
 		<br>
 		<div id="statusDiv">Status: Disconnected</div>
@@ -30,7 +30,7 @@
 		<br>
 		<button id="sendButton" onclick = "sendData()">Send</button>
 		<br>
-		
+		<button onclick="conn()"> con </button>
 		<br>
 		<div id="sendDiv"></div>
 		<br><br>
@@ -38,5 +38,3 @@
 		<div id="receiveDiv"></div>
     </body>
 </html>
-			
-
