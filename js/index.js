@@ -65,12 +65,7 @@ function onDiscoverDevice(device){
 
 
 function conn(){
-	//var  deviceTouch= event.srcElement.innerHTML;
-	//document.getElementById("debugDiv").innerHTML =""; // empty debugDiv
-	//var deviceTouchArr = deviceTouch.split(",");
-	ConnDeviceId = "Nevad"
-  //document.getElementById("debugDiv").innerHTML += "<br>"+deviceTouchArr[0]+"<br>"+deviceTouchArr[1]; //for debug:
-	ble.connect(ConnDeviceId, onConnect, onConnError);
+	ble.connect("D9:E3:F8:B6:B1:86", onConnect, onConnError);
  }
 
  //succes
