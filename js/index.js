@@ -59,9 +59,9 @@ function onDiscoverDevice(device){
 
 		var listItem = document.createElement('li'),
 		html = device.name+ "," + device.id;
-    if(device.name == "NEVAD"){
+
     istItem.innerHTML = html;
-    
+    if(device.name == "NEVAD"){    
 		document.getElementById("bleDeviceList").appendChild(listItem);
     }
 }
