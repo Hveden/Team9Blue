@@ -43,8 +43,13 @@ void error(const __FlashStringHelper*err) {
             automatically on startup)
 */
 /**************************************************************************/
+
 void setup(void)
 {
+  
+  Serial.begin(115200);
+  pinMode(2, OUTPUT);
+  
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
@@ -116,6 +121,7 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
+  
   // Check for user input
   char n, inputs[BUFSIZE + 1];
 
@@ -136,8 +142,19 @@ void loop(void)
   // Echo received data
   while ( ble.available() )
   {
-    int c = ble.read();
-    Serial.print((char)c);
+    char c = ble.read();
+    Serial.print(c);
+    if(c == 'a')
+    {
+      digitalWrite(2, HIGH);
+    }
+    if(c == 'b')
+    {
+      digitalWrite(2, LOW);
+    }
+   
   }
+    
+  
   delay(1000);
 }
