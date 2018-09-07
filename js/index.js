@@ -47,7 +47,6 @@ function refreshDeviceList(){
 	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
-		if(device.name == "HVEDEN")
 	} 
 	else 
 	{
@@ -59,7 +58,6 @@ function refreshDeviceList(){
 
 function onDiscoverDevice(device){
 	//Make a list in html and show devises
-		if(device.name == "HVEDEN")
 		{
 		var listItem = document.createElement('li'),
 		html = device.name+ "," + device.id;
@@ -75,7 +73,7 @@ function conn(){
 	var deviceTouchArr = deviceTouch.split(",");
 	ConnDeviceId = deviceTouchArr[1];
 	document.getElementById("debugDiv").innerHTML += "<br>"+deviceTouchArr[0]+"<br>"+deviceTouchArr[1]; //for debug:
-	ble.connect(ConnDeviceId, onConnect, onConnError);
+	ble.connect("D4:79:09:AC:61:BF", onConnect, onConnError);
  }
 
  //succes
