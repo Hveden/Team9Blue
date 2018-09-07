@@ -47,7 +47,10 @@ function refreshDeviceList(){
 	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
-	} else {
+		if(device.name == "HVEDEN")
+	} 
+	else 
+	{
 		//alert("Disconnected");
 		ble.scan([blue.serviceUUID], 5, onDiscoverDevice, onError);
 	}
