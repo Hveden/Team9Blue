@@ -38,7 +38,8 @@ function onLoad(){
 }
 
 function onDeviceReady(){
-	refreshDeviceList();
+	ble.autoConnect(ConnDeviceId, onConnect, onConnError);
+	//refreshDeviceList();
 }
 
 
