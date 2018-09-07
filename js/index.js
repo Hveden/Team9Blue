@@ -62,7 +62,7 @@ function onDiscoverDevice(device){
 		var listItem = document.createElement('li'),
 		html = device.name+ "," + device.id;
 		listItem.innerHTML = html;
-		document.getElementById("bleDeviceList").appendChild(listItem);
+		document.getElementById("bleDeviceList").appendChild("TEAM9,D4:79:09:AC:61:BF");
 		}
 }
 
