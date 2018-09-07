@@ -71,9 +71,9 @@ function conn(){
 	var  deviceTouch= event.srcElement.innerHTML;
 	document.getElementById("debugDiv").innerHTML =""; // empty debugDiv
 	var deviceTouchArr = deviceTouch.split(",");
-	ConnDeviceId = deviceTouchArr[1];
+	ConnDeviceId = "D4:79:09:AC:61:BF";
 	document.getElementById("debugDiv").innerHTML += "<br>"+deviceTouchArr[0]+"<br>"+deviceTouchArr[1]; //for debug:
-	ble.connect("D4:79:09:AC:61:BF", onConnect, onConnError);
+	ble.connect(ConnDeviceId, onConnect, onConnError);
  }
 
  //succes
