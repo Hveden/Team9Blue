@@ -165,11 +165,11 @@ void loop(void)
 
     if(c == 'p'){
       dataFile = SD.open("data.txt");
-      while(dataFile.available()){
+      //while(dataFile.available()){
           //Serial.print(dataFile.read());
-          ble.print(dataFile.read());
-        }
-
+        //  ble.print(dataFile.read());
+      //}
+      ble.print(dataFile.read());
 
       dataFile.close();
       }
