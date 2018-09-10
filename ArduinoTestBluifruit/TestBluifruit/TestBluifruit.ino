@@ -1,3 +1,6 @@
+
+
+
 /*********************************************************************
   This is an example based on nRF51822 based Bluefruit LE modules
 
@@ -161,7 +164,14 @@ void loop(void)
     dataFile.close();
 
     if(c == 'p'){
-      ble.print(dataFile.read());
+      dataFile = SD.open("data.txt");
+      while(dataFile.available()){
+          //Serial.print(dataFile.read());
+          ble.print(dataFile.read());
+        }
+
+
+      dataFile.close();
       }
    
   }

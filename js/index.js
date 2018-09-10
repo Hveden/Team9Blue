@@ -92,7 +92,7 @@ function onConnError(){
 }
 
  function onData(data){ // data received from Arduino
-   var modtag = bytesToString(data);
+   modtag = bytesToString(data);
 
   //document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
 }
@@ -100,6 +100,7 @@ function onConnError(){
 function reciveData(){
   var dataTest = stringToBytes("p");
   ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, dataTest, onSend, onError);
+  onData(data)
   document.getElementById("receiveDiv").innerHTML =  "Received: " + modtag + "<br/>";
 }
 function data(txt){
