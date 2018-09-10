@@ -5,6 +5,7 @@
 
 #include <Arduino.h>
 #include <SPI.h>
+#include <SD.h>
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
@@ -48,7 +49,10 @@ void setup(void)
 {
   
   Serial.begin(115200);
-  pinMode(2, OUTPUT);
+  
+
+
+  SD.begin(3);
   
   while (!Serial);  // required for Flora & Micro
   delay(500);
@@ -112,6 +116,14 @@ void setup(void)
   ble.setMode(BLUEFRUIT_MODE_DATA);
 
   Serial.println(F("******************************"));
+
+  Serial.println("test af sd");
+  dataFile = SD.open("data.txt", FILE_WRITE);
+  dataFile.write("hello");
+  Serial.println(dataFile.read());
+  SD.close("data.txt");
+  
+  
 }
 
 /**************************************************************************/
@@ -144,14 +156,10 @@ void loop(void)
   {
     char c = ble.read();
     Serial.print(c);
-    if(c == 'a')
-    {
-      digitalWrite(2, HIGH);
-    }
-    if(c == 'b')
-    {
-      digitalWrite(2, LOW);
-    }
+    dataFile = SD.open("data.txt", FILE_WRITE);
+    dataFile.write(c);
+    Serial.println(dataFile.read());
+    SD.close("data.txt");
    
   }
     
