@@ -15,7 +15,7 @@
 #if SOFTWARE_SERIAL_AVAILABLE
 #include <SoftwareSerial.h>
 #endif
-
+File dataFile;
 /*=========================================================================
        -----------------------------------------------------------------------*/
 #define FACTORYRESET_ENABLE         0
@@ -51,7 +51,7 @@ void setup(void)
   Serial.begin(115200);
   
 
-
+  
   SD.begin(3);
   
   while (!Serial);  // required for Flora & Micro
@@ -117,11 +117,10 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-  Serial.println("test af sd");
-  dataFile = SD.open("data.txt", FILE_WRITE);
-  dataFile.write("hello");
-  Serial.println(dataFile.read());
-  SD.close("data.txt");
+  //Serial.println("test af sd");
+  //dataFile = SD.open("data.txt", FILE_WRITE);
+  //dataFile.println("hello");
+  //dataFile.close();
   
   
 }
@@ -157,12 +156,16 @@ void loop(void)
     char c = ble.read();
     Serial.print(c);
     dataFile = SD.open("data.txt", FILE_WRITE);
-    dataFile.write(c);
-    Serial.println(dataFile.read());
-    SD.close("data.txt");
+    dataFile.print(c);
+    //Serial.println(dataFile.read());
+    dataFile.close();
+
+    if(c == 'p'){
+      ble.print(dataFile.read());
+      }
    
   }
-    
-  
   delay(1000);
+
+  
 }

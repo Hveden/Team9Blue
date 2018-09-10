@@ -31,6 +31,7 @@ var blue ={
 
 var ConnDeviceId = "D4:79:09:AC:61:BF";
 var deviceList =[];
+var modtag;
 
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
@@ -48,8 +49,8 @@ function refreshDeviceList(){
 	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
-	} 
-	else 
+	}
+	else
 	{
 		//alert("Disconnected");
 		ble.scan([blue.serviceUUID], 5, onDiscoverDevice, onError);
@@ -91,9 +92,16 @@ function onConnError(){
 }
 
  function onData(data){ // data received from Arduino
-	document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
+   var modtag = bytesToString(data);
+
+  //document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
 }
 
+function reciveData(){
+  var dataTest = stringToBytes("p");
+  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, dataTest, onSend, onError);
+  document.getElementById("receiveDiv").innerHTML =  "Received: " + modtag + "<br/>";
+}
 function data(txt){
 	messageInput.value = txt;
 }
