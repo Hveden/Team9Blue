@@ -99,7 +99,7 @@ function ab2str(buf) {
  function onData(data){ // data received from Arduino
    modtag = bytesToString(data);
 
-  document.getElementById("receiveDiv").innerHTML =  "Received: " + ab2str(data) + "<br/>";
+  document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
 }
 
 function reciveData(){

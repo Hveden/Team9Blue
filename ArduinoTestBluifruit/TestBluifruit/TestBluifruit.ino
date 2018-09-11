@@ -169,14 +169,19 @@ void loop(void)
   delay(5000);
 
 
+
+
   if(c == 'p'){
     dataFile = SD.open("data.txt");
-    while(dataFile.available())
+    //char m, reed[dataFile.size()+1];
+    //m = dataFile.read();
+    //reed[m] = 0;
+    //while(dataFile.available())
       // {
-      Serial.print(dataFile.read());
-      ble.write(dataFile.read());
+      Serial.println(dataFile.read());
+      //ble.write(dataFile.read());
       //}
-      //ble.print(dataFile.read());
+      ble.print(dataFile.read());
       delay(5000);  
       dataFile.close();
       c = 'n';
