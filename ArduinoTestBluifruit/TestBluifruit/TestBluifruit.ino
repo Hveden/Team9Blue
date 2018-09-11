@@ -176,12 +176,13 @@ void loop(void)
     //char m, reed[dataFile.size()+1];
     //m = dataFile.read();
     //reed[m] = 0;
-    //while(dataFile.available())
-      // {
+    while(dataFile.available())
+       {
       Serial.println(dataFile.read());
-      //ble.write(dataFile.read());
-      //}
-      ble.print(dataFile.read());
+      ble.write(dataFile.read());
+      
+      //ble.print(dataFile.read());
+       }
       delay(5000);  
       dataFile.close();
       c = 'n';

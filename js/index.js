@@ -136,3 +136,8 @@ function data(input){
   var data = stringToBytes(input);
  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
 }
+
+function hashing(){
+  var s = messageInput.Value;
+  document.getElementById("hash").innerHTML = s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0); 
+}
