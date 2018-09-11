@@ -35,7 +35,7 @@ var modtag;
 
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
-  bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
+  //bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
 }
 
 function onDeviceReady(){
@@ -46,7 +46,7 @@ function onDeviceReady(){
 
 function refreshDeviceList(){
 	//deviceList =[];
-	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
+	//document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
 	}
@@ -59,20 +59,6 @@ function refreshDeviceList(){
 
 
 function onDiscoverDevice(device){
-	if (device.name == "NEVAD"){
-		
-	
-	//Make a list in html and show devises
-		{
-		var listItem = document.createElement('li'),
-		html = device.name+ "," + device.id;
-		listItem.innerHTML = html;
-<<<<<<< HEAD
-		document.getElementById("bleDeviceList").appendChild(listItem);
-=======
-		document.getElementById("bleDeviceList").appendChild("TEAM9,D4:79:09:AC:61:BF");
->>>>>>> 0e3978c904776bfde7c4d8956b779ddd0670bdc3
-		}
 }
 
 
@@ -183,7 +169,7 @@ function encryptStringWithXORtoHex(key, input) {
         c += xorValueAsHexString;
     }
     return c;
-    document.getElementById("crypto").innerHTML = c;
+    //document.getElementById("crypto").innerHTML = c;
 }
 
 //hjælpe function
@@ -195,8 +181,8 @@ function encrypt(){
 //hjælpe function
 function decrypt(){
   var key = password.value;
-  var input = hex2a(messageInput.value);
-  document.getElementById("crypto").innerHTML = hex2a(encryptStringWithXORtoHex(key,input));
+  var input = hex2a(messageInputDownload.value);
+  messageInputDownload.value = hex2a(encryptStringWithXORtoHex(key,input));
 }
 
 
