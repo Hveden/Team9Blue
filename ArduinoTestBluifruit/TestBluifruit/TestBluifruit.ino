@@ -171,14 +171,15 @@ void loop(void)
 
   if(c == 'p'){
     dataFile = SD.open("data.txt");
-    //while(dataFile.available())
+    while(dataFile.available())
       // {
-      Serial.write(dataFile.read());
-      //ble.write(dataFile.read());
+      Serial.print(dataFile.read());
+      ble.write(dataFile.read());
       //}
       //ble.print(dataFile.read());
-
+      delay(5000);  
       dataFile.close();
+      c = 'n';
       }
   
 }
