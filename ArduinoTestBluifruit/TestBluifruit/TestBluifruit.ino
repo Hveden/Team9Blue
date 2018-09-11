@@ -19,6 +19,7 @@
 #include <SoftwareSerial.h>
 #endif
 File dataFile;
+char c;
 /*=========================================================================
        -----------------------------------------------------------------------*/
 #define FACTORYRESET_ENABLE         0
@@ -156,26 +157,28 @@ void loop(void)
   // Echo received data
   while ( ble.available() )
   {
-    char c = ble.read();
+    c = ble.read();
     Serial.print(c);
     dataFile = SD.open("data.txt", FILE_WRITE);
     dataFile.print(c);
     //Serial.println(dataFile.read());
     dataFile.close();
 
-    if(c == 'p'){
-      dataFile = SD.open("data.txt");
-      //while(dataFile.available()){
-          //Serial.print(dataFile.read());
-        //  ble.print(dataFile.read());
+   
+  }
+  delay(5000);
+
+
+  if(c == 'p'){
+    dataFile = SD.open("data.txt");
+    //while(dataFile.available())
+      // {
+      Serial.write(dataFile.read());
+      //ble.write(dataFile.read());
       //}
-      ble.print(dataFile.read());
+      //ble.print(dataFile.read());
 
       dataFile.close();
       }
-   
-  }
-  delay(1000);
-
   
 }
