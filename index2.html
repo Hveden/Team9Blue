@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
+<link rel="stylesheet" type="text/css" href="CSS.css">
 
+<title>DOWNLOAD</title>
+<head>
 <meta charset="utf-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -10,46 +12,40 @@
 <script type="text/javascript" src="js/index.js"></script>
 <link rel="stylesheet" type="text/css" href="CSS.css">
 
-<title>UPLOAD</title>
+<body>
 
+<h1>Download</h1>
+<p>For downloading files from the system</p>
 
-<body onload = "onLoad()">
-
-<h1>Upload</h1>
-<p>For uploading files to the system</p>
+<center>
 
 <div>
 <button class="button" onclick="conn()" type="submit" style="vertical-align:middle"><span>Conn</span></button>
 <button class="button" onclick="disconnect()" type="submit" style="vertical-align:middle"><span>Disconn</span></button>
 </div>
 
-<center>
-</br>
-</br>
+</br></br>
 
 <input id="messageInput()" type="text" value="LarsCanYouHearMe">
 <button class="button" type="submit" style="vertical-align:middle"><span>Choose file</span></button>
-
-</br>
-</br>
-
-<form action="/action_page.php">
-  Password:<br>
-  <input id="password" type="text" value="Lars221">
-  <input onclick="decrypt()" type="submit" value="Set Password">
-</form> 
-<br>
-</center>
-<center>
-<button class="button"type="submit" onclick="hashing()" style="vertical-align:middle"><span>Generate hash</span></button>
 <p id="hash"></p>
+
 </br>
-<a href="index2.html" >
-<button class="button" type="submit" style="vertical-align:middle"><span>Go to Download</span></button>
+
+<button class="button" onclick="decrypt()" type="submit" style="vertical-align:middle"><span>Decrypt</span></button>
+
+<p id="crypto"></p>
+
+</center>
+
+</br>
+<center>
+<a href="index.html" >
+<button class="button" type="submit" style="vertical-align:middle"><span>Go to Upload</span></button>
 </a>
 </center>
+</br>
 
 </body>
 </head>
-
 </html>

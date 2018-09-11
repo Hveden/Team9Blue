@@ -55,11 +55,15 @@ function refreshDeviceList(){
 
 
 function onDiscoverDevice(device){
+	if (device.name == "NEVAD"){
+		
+	
 	//Make a list in html and show devises
 		var listItem = document.createElement('li'),
 		html = device.name+ "," + device.id;
 		listItem.innerHTML = html;
 		document.getElementById("bleDeviceList").appendChild(listItem);
+		}
 }
 
 
