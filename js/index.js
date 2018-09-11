@@ -91,10 +91,15 @@ function onConnError(){
 	document.getElementById("statusDiv").innerHTML = " Status: Disonnected";
 }
 
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
+
+
  function onData(data){ // data received from Arduino
    modtag = bytesToString(data);
 
-  document.getElementById("receiveDiv").innerHTML =  "Received: " + data + "<br/>";
+  document.getElementById("receiveDiv").innerHTML =  "Received: " + ab2str(data) + "<br/>";
 }
 
 function reciveData(){
