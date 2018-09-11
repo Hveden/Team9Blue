@@ -29,16 +29,18 @@ var blue ={
     rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
 }
 
-var ConnDeviceId;
+var ConnDeviceId = "D4:79:09:AC:61:BF";
 var deviceList =[];
+var modtag;
 
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
-    bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
+  bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
 }
 
 function onDeviceReady(){
-	refreshDeviceList();
+	ble.autoConnect(ConnDeviceId, onConnect, onConnError);
+	//refreshDeviceList();
 }
 
 
@@ -47,7 +49,9 @@ function refreshDeviceList(){
 	document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
-	} else {
+	}
+	else
+	{
 		//alert("Disconnected");
 		ble.scan([blue.serviceUUID], 5, onDiscoverDevice, onError);
 	}
@@ -59,10 +63,15 @@ function onDiscoverDevice(device){
 		
 	
 	//Make a list in html and show devises
+		{
 		var listItem = document.createElement('li'),
 		html = device.name+ "," + device.id;
 		listItem.innerHTML = html;
+<<<<<<< HEAD
 		document.getElementById("bleDeviceList").appendChild(listItem);
+=======
+		document.getElementById("bleDeviceList").appendChild("TEAM9,D4:79:09:AC:61:BF");
+>>>>>>> 0e3978c904776bfde7c4d8956b779ddd0670bdc3
 		}
 }
 
@@ -89,10 +98,23 @@ function onConnError(){
 	document.getElementById("statusDiv").innerHTML = " Status: Disonnected";
 }
 
- function onData(data){ // data received from Arduino
-	document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
+
+ function onData(data){ // data received from Arduino
+   modtag = bytesToString(data);
+
+  document.getElementById("receiveDiv").innerHTML =  "Received: " + bytesToString(data) + "<br/>";
+}
+
+function reciveData(){
+  var dataTest = stringToBytes("p");
+  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, dataTest, onSend, onError);
+  //onData(data)
+  document.getElementById("receiveDiv").innerHTML =  "Received: " + modtag + "<br/>";
+}
 function data(txt){
 	messageInput.value = txt;
 }
@@ -120,4 +142,69 @@ function onError(reason)  {
 function data(input){
   var data = stringToBytes(input);
  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
+}
+var s;
+function hashing(){
+  s = messageInput.value;
+  var a = 1, c = 0, h, o;
+if (s) {
+    a = 0;
+    /*jshint plusplus:false bitwise:false*/
+    for (h = s.length - 1; h >= 0; h--) {
+        o = s.charCodeAt(h);
+        a = (a<<6&268435455) + o + (o<<14);
+        c = a & 266338304;
+        a = c!==0?a^c>>21:a;
+    }
+}
+  document.getElementById("hash").innerHTML = String(a);
+}
+
+
+// Converter til HEX da nogle outputs kan være nonprintable
+function encryptStringWithXORtoHex(key, input) {
+
+    var c = '';
+    while (key.length < input.length) {
+         key += key;
+    }
+    for(var i=0; i<input.length; i++) {
+        var value1 = input[i].charCodeAt(0);
+        var value2 = key[i].charCodeAt(0);
+
+        var xorValue = value1 ^ value2;
+
+        var xorValueAsHexString = xorValue.toString("16");
+
+        if (xorValueAsHexString.length < 2) {
+            xorValueAsHexString = "0" + xorValueAsHexString;
+        }
+
+        c += xorValueAsHexString;
+    }
+    return c;
+    document.getElementById("crypto").innerHTML = c;
+}
+
+//hjælpe function
+function encrypt(){
+  var key = password.value;
+  var input = messageInput.value;
+  document.getElementById("crypto").innerHTML = encryptStringWithXORtoHex(key, input);
+}
+
+function decrypt(){
+  var key = password.value;
+  var input = hex2a(messageInput.value);
+  document.getElementById("crypto").innerHTML = hex2a(encryptStringWithXORtoHex(key,input));
+}
+
+
+
+function hex2a(hexx) {
+    var hex = hexx.toString();//force conversion
+    var str = '';
+    for (var i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
 }

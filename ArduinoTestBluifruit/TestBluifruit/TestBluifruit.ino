@@ -1,3 +1,6 @@
+
+
+
 /*********************************************************************
   This is an example based on nRF51822 based Bluefruit LE modules
 
@@ -5,6 +8,7 @@
 
 #include <Arduino.h>
 #include <SPI.h>
+#include <SD.h>
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
@@ -14,7 +18,8 @@
 #if SOFTWARE_SERIAL_AVAILABLE
 #include <SoftwareSerial.h>
 #endif
-
+File dataFile;
+char c;
 /*=========================================================================
        -----------------------------------------------------------------------*/
 #define FACTORYRESET_ENABLE         0
@@ -43,8 +48,16 @@ void error(const __FlashStringHelper*err) {
             automatically on startup)
 */
 /**************************************************************************/
+
 void setup(void)
 {
+  
+  Serial.begin(115200);
+  
+
+  
+  SD.begin(3);
+  
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
@@ -93,7 +106,7 @@ void setup(void)
   }
 
   //Give module a new name
-  ble.println("AT+GAPDEVNAME=NEVAD"); // named TLONE
+  ble.println("AT+GAPDEVNAME=TEAM9"); // named TLONE
 
   // Check response status
   ble.waitForOK();
@@ -107,6 +120,13 @@ void setup(void)
   ble.setMode(BLUEFRUIT_MODE_DATA);
 
   Serial.println(F("******************************"));
+
+  //Serial.println("test af sd");
+  //dataFile = SD.open("data.txt", FILE_WRITE);
+  //dataFile.println("hello");
+  //dataFile.close();
+  
+  
 }
 
 /**************************************************************************/
@@ -116,6 +136,7 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
+  
   // Check for user input
   char n, inputs[BUFSIZE + 1];
 
@@ -136,8 +157,35 @@ void loop(void)
   // Echo received data
   while ( ble.available() )
   {
-    int c = ble.read();
-    Serial.print((char)c);
+    c = ble.read();
+    Serial.print(c);
+    dataFile = SD.open("data.txt", FILE_WRITE);
+    dataFile.print(c);
+    //Serial.println(dataFile.read());
+    dataFile.close();
+
+   
   }
-  delay(1000);
+  delay(5000);
+
+
+
+
+  if(c == 'p'){
+    dataFile = SD.open("data.txt");
+    //char m, reed[dataFile.size()+1];
+    //m = dataFile.read();
+    //reed[m] = 0;
+    while(dataFile.available())
+       {
+      Serial.println(dataFile.read());
+      ble.write(dataFile.read());
+      
+      //ble.print(dataFile.read());
+       }
+      delay(5000);  
+      dataFile.close();
+      c = 'n';
+      }
+  
 }
