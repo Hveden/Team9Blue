@@ -35,7 +35,7 @@ var modtag;
 
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
-    bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
+  bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
 }
 
 function onDeviceReady(){
@@ -136,8 +136,68 @@ function data(input){
   var data = stringToBytes(input);
  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
 }
-
+var s;
 function hashing(){
-  var s = messageInput.Value;
-  document.getElementById("hash").innerHTML = s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+  s = messageInput.value;
+  var a = 1, c = 0, h, o;
+if (s) {
+    a = 0;
+    /*jshint plusplus:false bitwise:false*/
+    for (h = s.length - 1; h >= 0; h--) {
+        o = s.charCodeAt(h);
+        a = (a<<6&268435455) + o + (o<<14);
+        c = a & 266338304;
+        a = c!==0?a^c>>21:a;
+    }
+}
+  document.getElementById("hash").innerHTML = String(a);
+}
+
+
+// Converter til HEX da nogle outputs kan være nonprintable
+function encryptStringWithXORtoHex(key, input) {
+
+    var c = '';
+    while (key.length < input.length) {
+         key += key;
+    }
+    for(var i=0; i<input.length; i++) {
+        var value1 = input[i].charCodeAt(0);
+        var value2 = key[i].charCodeAt(0);
+
+        var xorValue = value1 ^ value2;
+
+        var xorValueAsHexString = xorValue.toString("16");
+
+        if (xorValueAsHexString.length < 2) {
+            xorValueAsHexString = "0" + xorValueAsHexString;
+        }
+
+        c += xorValueAsHexString;
+    }
+    return c;
+    document.getElementById("crypto").innerHTML = c;
+}
+
+//hjælpe function
+function encrypt(){
+  var key = password.value;
+  var input = messageInput.value;
+  document.getElementById("crypto").innerHTML = encryptStringWithXORtoHex(key, input);
+}
+
+function decrypt(){
+  var key = password.value;
+  var input = hex2a(messageInput.value);
+  document.getElementById("crypto").innerHTML = hex2a(encryptStringWithXORtoHex(key,input));
+}
+
+
+
+function hex2a(hexx) {
+    var hex = hexx.toString();//force conversion
+    var str = '';
+    for (var i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
 }
