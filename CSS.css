@@ -1,0 +1,49 @@
+h1{
+font-size : 80px;
+
+text-align:center;
+}
+
+p{
+	font-size : 20px;
+	text-align : center;
+}
+
+background-color{
+	color : #0000FF
+}
+div{
+	text-align:center;
+}
+
+form {
+	text-align:center;
+	font-size: 40px;
+	size: 60px:
+}
+a{
+	text-align:center;
+}
+button {
+
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  margin: 5px;
+}
+
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+
+
