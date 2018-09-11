@@ -183,9 +183,9 @@ function encryptStringWithXORtoHex(key, input) {
 function encrypt(){
   var key = password.value;
   var input = messageInput.value;
-  document.getElementById("crypto").innerHTML = encryptStringWithXORtoHex(key, input);
+  messageInput.value= encryptStringWithXORtoHex(key, input);
 }
-
+//hjælpe function
 function decrypt(){
   var key = password.value;
   var input = hex2a(messageInput.value);
