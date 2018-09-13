@@ -51,13 +51,13 @@ void error(const __FlashStringHelper*err) {
 
 void setup(void)
 {
-  
-  Serial.begin(115200);
-  
 
-  
+  Serial.begin(115200);
+
+
+  //Sæt SD slave pin
   SD.begin(3);
-  
+
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
@@ -121,12 +121,8 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-  //Serial.println("test af sd");
-  //dataFile = SD.open("data.txt", FILE_WRITE);
-  //dataFile.println("hello");
-  //dataFile.close();
-  
-  
+
+
 }
 
 /**************************************************************************/
@@ -136,7 +132,7 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-  
+
   // Check for user input
   char n, inputs[BUFSIZE + 1];
 
@@ -159,33 +155,30 @@ void loop(void)
   {
     c = ble.read();
     Serial.print(c);
+    //open for læs/skriv
     dataFile = SD.open("data.txt", FILE_WRITE);
     dataFile.print(c);
-    //Serial.println(dataFile.read());
+    //husker at lukke
     dataFile.close();
 
-   
+
   }
   delay(5000);
 
 
 
-
+//check for læs character
   if(c == 'p'){
     dataFile = SD.open("data.txt");
-    //char m, reed[dataFile.size()+1];
-    //m = dataFile.read();
-    //reed[m] = 0;
     while(dataFile.available())
        {
       Serial.println(dataFile.read());
       ble.write(dataFile.read());
-      
-      //ble.print(dataFile.read());
        }
-      delay(5000);  
+      delay(5000);
       dataFile.close();
       c = 'n';
+      //sæt karakter til ikke læs characater
       }
-  
+
 }
