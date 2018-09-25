@@ -27,22 +27,23 @@
 </br>
 </br>
 
-<input id="messageInput" type="text" value="LarsCanYouHearMe">
-<button class="button" type="submit" style="vertical-align:middle"><span>Choose file</span></button>
+<input id="messageInput" type="text" value="hej">
+<button class="button" type="submit" onclick="sendData()" style="vertical-align:middle"><span>Choose file</span></button>
 
 </br>
 </br>
 
 <form>
   Password:<br>
+  
+  
   <input id="password" type="text" value="Password">
 </form>
+<div>
   <button onclick="encrypt()" class="button"> Encrypt </button>
-<br>
-</center>
-<center>
 <button class="button"type="submit" onclick="hashing()" style="vertical-align:middle"><span>Generate hash</span></button>
 <p id="hash"></p>
+</div>
 </br>
 <a href="index2.html" >
 <button class="button" type="submit" style="vertical-align:middle"><span>Go to Download</span></button>
