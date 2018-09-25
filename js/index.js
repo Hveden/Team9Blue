@@ -175,8 +175,8 @@ function encrypt(){
 //hjælpe function
 function decrypt(){
   var key = password.value;
-  var input = hex2a(messageInputDownload.value);
-  messageInputDownload.value = hex2a(encryptStringWithXORtoHex(key,input));
+  var input = hex2a(messageInput.value);
+  messageInput.value = hex2a(encryptStringWithXORtoHex(key,input));
 }
 
 
