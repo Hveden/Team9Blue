@@ -16,12 +16,6 @@ function stringToBytes(string) {
     return array.buffer;
 }
 
-// this is ble hm-10 UART service
-/*var blue= {
-    serviceUUID: "0000FFE0-0000-1000-8000-00805F9B34FB",
-    characteristicUUID: "0000FFE1-0000-1000-8000-00805F9B34FB"
-};*/
-
 //the bluefruit UART Service
 var blue ={
 	serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
@@ -29,24 +23,21 @@ var blue ={
     rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
 }
 
+//Hardcoded så telefonen altid connecter til den rigtige device.
 var ConnDeviceId = "D4:79:09:AC:61:BF";
 var deviceList =[];
 var modtag;
 
 function onLoad(){
 	document.addEventListener('deviceready', onDeviceReady, false);
-  //bleDeviceList.addEventListener('touchstart', conn, false); // assume not scrolling
 }
 
 function onDeviceReady(){
 	ble.autoConnect(ConnDeviceId, onConnect, onConnError);
-	//refreshDeviceList();
 }
 
 
 function refreshDeviceList(){
-	//deviceList =[];
-	//document.getElementById("bleDeviceList").innerHTML = ''; // empties the list
 	if (cordova.platformId === 'android') { // Android filtering is broken
 		ble.scan([], 5, onDiscoverDevice, onError);
 	}
@@ -56,12 +47,9 @@ function refreshDeviceList(){
 		ble.scan([blue.serviceUUID], 5, onDiscoverDevice, onError);
 	}
 }
-
-
 function onDiscoverDevice(device){
 }
-
-
+//connector
 function conn(){
 	var  deviceTouch= event.srcElement.innerHTML;
 	document.getElementById("debugDiv").innerHTML =""; // empty debugDiv
@@ -129,15 +117,22 @@ function data(input){
   var data = stringToBytes(input);
  ble.writeWithoutResponse(ConnDeviceId, blue.serviceUUID, blue.txCharacteristic, data, onSend, onError);
 }
+
+
 var s;
 function hashing(){
+  //lånt fra https://gist.github.com/iperelivskiy/4110988
+  //input
   s = messageInput.value;
   var a = 1, c = 0, h, o;
+  //tjekker om der er et input
 if (s) {
     a = 0;
     /*jshint plusplus:false bitwise:false*/
     for (h = s.length - 1; h >= 0; h--) {
         o = s.charCodeAt(h);
+        //<< flytter bits til x pladser venstre
+        //& XOR function
         a = (a<<6&268435455) + o + (o<<14);
         c = a & 266338304;
         a = c!==0?a^c>>21:a;
@@ -147,7 +142,7 @@ if (s) {
 }
 
 
-// Converter til HEX da nogle outputs kan være nonprintable
+// Konverter til HEX da nogle outputs kan være nonprintable
 function encryptStringWithXORtoHex(key, input) {
 
     var c = '';
@@ -169,7 +164,6 @@ function encryptStringWithXORtoHex(key, input) {
         c += xorValueAsHexString;
     }
     return c;
-    //document.getElementById("crypto").innerHTML = c;
 }
 
 //hjælpe function
@@ -186,7 +180,7 @@ function decrypt(){
 }
 
 
-
+//omdanner HEX til ASCII
 function hex2a(hexx) {
     var hex = hexx.toString();//force conversion
     var str = '';
